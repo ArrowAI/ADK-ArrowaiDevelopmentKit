@@ -1,0 +1,31 @@
+image: node:14-slim
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - apt-get update && apt-get install -yqq jq python3 unzip curl git
+    - npm install -g @angular/cli
+    - curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
+    - mkdir -p /usr/local/gcloud && tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz && /usr/local/gcloud/google-cloud-sdk/install.sh -q --usage-reporting=false --additional-components beta
+
+    - PATH=$PATH:/usr/local/gcloud/google-cloud-sdk/bin && export PATH
+    - GCLOUD_SERVICE_KEY_PATH="/tmp/${CI_PIPELINE_ID}.json"
+    - echo "$GCLOUD_SERVICE_KEY" > "$GCLOUD_SERVICE_KEY_PATH"
+    - gcloud -q auth activate-service-account --key-file $GCLOUD_SERVICE_KEY_PATH
+    - gcloud -q config set project arrowai-kubernetes
+
+    - npm install -g firebase-tools
+    - apt-get --assume-yes install python
+    - npm install
+    - npm run buildforstorage
+    - cd dist
+    - tar --exclude-vcs -cvf ../uielementsdk.tar .
+    - cd ..
+    - gsutil -h "Cache-Control:no-cache, max-age=0" cp uielementsdk.tar gs://arrowaisdk-packages/uielementserver/uielementsdk.tar
+
+    - export GOOGLE_APPLICATION_CREDENTIALS="/builds/kubedeploy/frontendsdk/arrowai-kubernetes-firebase-adminsdk-17pj6-969ab41d25.json"
+    - ls -la dist/
+    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token "1//0gCckoeinPj7MCgYIARAAGBASNwF-L9IrDlZZn4HYL7obQnHmz9r6vp1kmRhrZhxUUgolpMuAJJQfEuzm7Owj_YVtC29G1vghTX0"
