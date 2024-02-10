@@ -1,6 +1,6 @@
 {
     "name": "@arrowai/adk",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "ArrowAI Development Kit",
     "main": "./index.js",
     "preinstall": "npx npm-force-resolutions",
