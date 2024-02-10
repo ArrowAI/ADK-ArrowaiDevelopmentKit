@@ -4,9 +4,6 @@
     "description": "ArrowAI Development Kit",
     "main": "./index.js",
     "preinstall": "npx npm-force-resolutions",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
     "bin": {
         "adk": "./index.js"
     },
