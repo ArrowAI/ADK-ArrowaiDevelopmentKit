@@ -1,6 +1,8 @@
 # ArrowAI Development Kit
 
 ![NPM Version](https://img.shields.io/npm/v/%40arrowai%2Fadk)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ArrowAI/ADK-ArrowaiDevelopmentKit/npm-publish.yml)
+
 
 ADK (Arrowai Development Kit) is used for Developing, Testing and Releasing various ArrowAI modules. 
 
