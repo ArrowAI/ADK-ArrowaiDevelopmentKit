@@ -11,6 +11,16 @@ on:
       - '*'
 
 jobs:
+  buildFrontendElement:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: cd frontendelement && npm ci
+      - run: npm run build
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -19,6 +29,7 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
+      - run: cp frontendelement/dist lib/frontendSdk/dist
 
   publish-npm:
     needs: build
