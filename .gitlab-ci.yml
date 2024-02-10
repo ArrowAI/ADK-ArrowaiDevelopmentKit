@@ -1,0 +1,17 @@
+image: utkarshx/nodejs-googlesdk:latest
+
+stages:
+  - build
+
+build:
+  stage: build
+
+  script:
+    - GCLOUD_SERVICE_KEY_PATH="/tmp/${CI_PIPELINE_ID}.json"
+    - echo "$GCLOUD_SERVICE_KEY" > "$GCLOUD_SERVICE_KEY_PATH"
+    - gcloud -q auth activate-service-account --key-file $GCLOUD_SERVICE_KEY_PATH
+    - gcloud -q config set project arrowai-kubernetes
+    - apt-get install zip
+    - tar --exclude-vcs -cvf ../adk.tar .
+    - cd ..
+    - gsutil -h "Cache-Control:no-cache, max-age=0" cp adk.tar gs://arrowaisdk-packages/adk/adk.tar

@@ -1,0 +1,12 @@
+{
+    "type": "uielement_app",
+    "unique_name": "userpackage-1211",
+    "function_deploy": {
+        "enabled": "enabled",
+        "function_version": "0.0.0"
+    },
+    "registry_deploy": {
+        "registry_version": "0.0.18",
+        "forced_deployment": "disabled"
+    } 
+}
