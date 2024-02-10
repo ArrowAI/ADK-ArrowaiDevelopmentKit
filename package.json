@@ -1,5 +1,5 @@
 {
-    "name": "adk",
+    "name": "@arrowai/adk",
     "version": "1.0.0",
     "description": "ArrowAI Development Kit",
     "main": "./index.js",
@@ -36,5 +36,9 @@
         "request": "^2.88.2",
         "socket.io-client": "^2.5.0",
         "wiz-cliparse": "^0.5.4"
-    }
+    },
+    "publishConfig": {
+        "access": "public"  
+      }
+      
 }
